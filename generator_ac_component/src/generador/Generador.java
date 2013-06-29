@@ -13,8 +13,9 @@ import automatas.WolframAC;
 public class Generador {
     
     private int rows = 100;
-    private int columns = 1000;
+    private int columns = 100;
     private final String path_to_file;
+    private final String nombre_archivo = "cadena_bits.tx";
     
     public Generador( String p_path_to_file){
         // inicializar matriz
@@ -22,7 +23,7 @@ public class Generador {
         wolframAc.evolucionar();
         
         this.path_to_file = p_path_to_file;
-        wolframAc.imprimir();
+        wolframAc.imprimir( this.path_to_file + nombre_archivo);
     }
 
     Generador() {

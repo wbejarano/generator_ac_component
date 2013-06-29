@@ -4,7 +4,10 @@
  */
 package automatas;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,6 +21,7 @@ public class WolframAC {
     private int columnas;
     private int neighborLeft;
     private int neighborRight;
+    private File archivo;
 
     public WolframAC(int p_filas, int p_columnas) {
         // Inicializacion de variables
@@ -25,7 +29,7 @@ public class WolframAC {
         this.columnas = p_columnas;
 
         // Creación de matriz
-        matriz = new int[this.filas][this.columnas];
+        matriz = new int[this.filas+1][this.columnas+1];
         // Inicialización de mattiz
         this.populate();
     }
@@ -33,32 +37,40 @@ public class WolframAC {
     private void populate() {
 
         Random randomNum = new Random();
-        for (int x = 0; x < this.filas; x++) {
-            for (int y = 0; y < this.columnas; y++) {
-                matriz[x][y] = randomNum.nextInt(2);
+        for (int x = 1; x <= this.filas; x++) {
+            for (int y = 1; y <= this.columnas; y++) {
+                matriz[x][y] = randomNum.nextInt(0x2);
             }
         }
     }
 
     public void evolucionar() {
 
-        for (int x = 0; x < this.filas; x++) {
-            for (int y = 0; y < this.columnas; y++) {
-                //ac[x][y] = randomNum.nextInt(2);
+        //filas 
+        for (int x = 1; x <= this.filas; x++) {
+            //columnas
+            for (int y = 1; y <= this.columnas; y++) {
+                
+                //Se seleccionan los vecinos de la célula según posición
                 if (y == 1) {
+                    //Si la celula está en la primera columna
                     neighborLeft = x;
                     neighborRight = y + 1;
                 } else if (y == x) {
+                    //Si la célula es ella misma
                     neighborLeft = y - 1;
                     neighborRight = 1;
-                } else {
+                } else if(y == this.columnas ){
+                    //Si la célula es la última columna
+                    neighborLeft = y - 1;
+                    neighborRight = 1;
+                }else{
+                    //Si la célula es cualquier otra a las anteriores
                     neighborLeft = y - 1;
                     neighborRight = y + 1;
                 }
-
                 
-//        ac(i+1, j) = distribuidor(MAC(i , neighborLeft),MAC(i , neighborRight),MAC(i , j));
-
+                matriz[ x ][ y ] = aplicarRegla(matriz[x][neighborLeft], matriz[x][neighborRight], matriz[x][y]);
             }
         }
     }
@@ -68,11 +80,11 @@ public class WolframAC {
         Random randomNum = new Random();
         int pattern = 0;
         switch (randomNum.nextInt(5)) {
-            case 0:  
+            case 0:
                 // Regla WA
                 pattern = (((iz ^ de) + (de * ~cell)) % 2);
                 break;
-            case 1:  
+            case 1:
                 //regla 30
                 pattern = ((1 + iz + cell + de + (cell * de)) % 2);
                 break;
@@ -82,15 +94,31 @@ public class WolframAC {
             case 3:
                 //regla 75
                 pattern = ((1 + iz + (cell * de)) % 2);
-            case 4:  
+            case 4:
                 //regla 90
                 pattern = ((iz + de) % 2);
                 break;
         }
         return pattern;
     }
-    
-    public void imprimir(){
-        
+
+    public void imprimir(String p_path_file) {
+
+        archivo = new File("/home/wbejarano/miarchivo.txt");
+        String fila = "";
+        try (PrintWriter grabador = new PrintWriter(archivo)) {
+
+            for (int x = 0; x < this.filas; x++) {
+                fila = "";
+                for (int y = 0; y < this.columnas; y++) {
+                    fila += matriz[x][y];
+                }
+                grabador.println( fila.replace("-",""));
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
     }
 }

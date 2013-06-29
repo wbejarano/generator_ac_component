@@ -15,7 +15,7 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Generador ac = new Generador();
+        Generador generador = new Generador("/home/wandrew/");
         
         
     }
