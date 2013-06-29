@@ -16,4 +16,6 @@ public class Generator_ac_component {
     public static void main(String[] args) {
         // TODO code application logic here
     }
+    
+    //Trabajo
 }
