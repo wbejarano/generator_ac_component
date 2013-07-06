@@ -37,8 +37,8 @@ public class WolframAC {
     private void populate() {
 
         Random randomNum = new Random();
-        for (int x = 1; x <= this.filas; x++) {
-            for (int y = 1; y <= this.columnas; y++) {
+        for (int x = 0; x <= this.filas; x++) {
+            for (int y = 0; y <= this.columnas; y++) {
                 matriz[x][y] = randomNum.nextInt(0x2);
             }
         }
@@ -47,12 +47,12 @@ public class WolframAC {
     public void evolucionar() {
 
         //filas 
-        for (int x = 1; x <= this.filas; x++) {
+        for (int x = 0; x <= this.filas; x++) {
             //columnas
-            for (int y = 1; y <= this.columnas; y++) {
+            for (int y = 0; y <= this.columnas; y++) {
                 
                 //Se seleccionan los vecinos de la célula según posición
-                if (y == 1) {
+                if (y == 0) {
                     //Si la celula está en la primera columna
                     neighborLeft = x;
                     neighborRight = y + 1;
