@@ -15,7 +15,7 @@ public class Generador {
     private int rows = 100;
     private int columns = 100;
     private final String path_to_file;
-    private final String nombre_archivo = "cadena_bits.tx";
+    private final String nombre_archivo = "cadena_bits.txt";
     
     public Generador( String p_path_to_file){
         // inicializar matriz
